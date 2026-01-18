@@ -63,13 +63,8 @@ class FileStorage:
         Returns:
             Path to saved file, or None if failed
         """
-        # 解析日期
-        date = self.url_parser.parse_date(article.url)
-        if not date:
-            logger.warning(f"Failed to parse URL date: {article.url}")
-            return None
-
-        date_str = date.strftime("%Y-%m-%d")
+        # 使用今天日期作为保存目录
+        today_str = datetime.now().strftime("%Y-%m-%d")
 
         # 提取标题
         slug = self.url_parser.parse_slug(article.url)
@@ -78,11 +73,18 @@ class FileStorage:
             title = extract_title_func(article.raw_content, slug)
 
         # 构建保存路径
-        save_dir = self.base_dir / source / date_str
+        save_dir = self.base_dir / source / today_str
         save_dir.mkdir(parents=True, exist_ok=True)
 
-        # 保存为 md 文件
-        save_path = save_dir / f"{title}.md"
+        # 保存为 md 文件（带去重）
+        base_name = f"{title}.md"
+        save_path = save_dir / base_name
+        counter = 1
+        while save_path.exists():
+            base_name = f"{title}_{counter}.md"
+            save_path = save_dir / base_name
+            counter += 1
+
         save_path.write_text(article.raw_content)
         logger.info(f"Saved article to {save_path}")
 

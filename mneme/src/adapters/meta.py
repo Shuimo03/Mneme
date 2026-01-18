@@ -1,5 +1,4 @@
-import http
-import json
+from datetime import datetime
 import logging
 import uuid
 from pathlib import Path
@@ -29,7 +28,8 @@ class MetaAdapter(BaseAdapter):
                 logging.error(f"Failed to fetch articles from {BASE_URL}")
                 return []
 
-            links_data = json.loads(response.json).get("links", {})
+
+            links_data = response.links
             internal_links = links_data.get("internal", [])
 
             target_urls = []
@@ -57,7 +57,7 @@ class MetaAdapter(BaseAdapter):
             logging.info(f"Parsing {url}")
             async with AsyncWebCrawler() as crawler:
                 response = await crawler.arun(url)
-                if response.status != http.HTTPStatus.OK:
+                if response is None:
                     logging.error(f"Failed to fetch articles from {url}")
                     continue
 
@@ -69,13 +69,18 @@ class MetaAdapter(BaseAdapter):
 
                 # 使用 uuid 生成唯一 id
                 article_id = str(uuid.uuid4())
+                now_time = datetime.now()
+
+                # 从 URL slug 提取标题
+                slug = url.rstrip("/").split("/")[-1]
+                title = slug.replace("-", " ").title()
 
                 # 创建 Article 对象
                 article = Article(
                     id=article_id,
                     source="meta",
-                    title=url,
-                    published_at=None,
+                    title=title,
+                    published_at=now_time,
                     url=url,
                     raw_content=markdown,
                 )

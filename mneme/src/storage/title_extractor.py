@@ -16,17 +16,21 @@ def extract_title(markdown: str, default: str) -> str:
     if not markdown:
         return default.replace("-", " ").title()
 
-    # 匹配第一行 # 开头的内容
+    # 跳过图片链接、空白行等非标题行
     lines = markdown.strip().split("\n")
-    for line in lines:
+    for i, line in enumerate(lines):
         line = line.strip()
+        # 只处理 # 开头的标题行
         if line.startswith("# "):
+            title_content = line[2:].strip()
+            # 跳过以 [ 开头的内容（通常是网站品牌 Logo 链接）
+            if title_content.startswith("["):
+                continue
             # 清理标题，移除特殊字符
-            title = line[2:].strip()
-            # 替换不合法字符为空格
-            title = re.sub(r'[<>:"/\\|?]', " ", title)
+            title = re.sub(r"[<>:\"/\\|?']", " ", title_content)
             # 多个空格合并为一个
             title = re.sub(r"\s+", " ", title).strip()
             return title
 
+    # 如果没有找到合适的 # 标题，返回 slug 转换后的标题
     return default.replace("-", " ").title()

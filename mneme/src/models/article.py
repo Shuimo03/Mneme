@@ -9,4 +9,3 @@ class Article(BaseModel):
     published_at: datetime
     url: str
     raw_content: str = ""
-    raw_context_path: str = ""
