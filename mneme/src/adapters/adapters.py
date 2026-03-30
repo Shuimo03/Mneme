@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
+
 from ..models.article import Article
+
 
 class BaseAdapter(ABC):
     def __init__(self, output_dir: Path | str = "data/raw"):
@@ -8,19 +10,19 @@ class BaseAdapter(ABC):
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     @abstractmethod
-    async def fetch(self) ->list[str]:
-        pass
+    async def fetch(self) -> list[str]:
+        """Fetch source URLs."""
 
     @abstractmethod
-    async def parse(self,url_list: list[str]) ->list[Article]:
-        pass
+    async def parse(self, url_list: list[str]) -> list[Article]:
+        """Parse source URLs into articles."""
 
     @abstractmethod
     async def save(self, articles: list[Article]) -> list[Path]:
-        pass
+        """Persist parsed articles."""
 
     async def run(self) -> list[Article]:
         urls = await self.fetch()
-        articles = self.parse(urls)
+        articles = await self.parse(urls)
         await self.save(articles)
         return articles

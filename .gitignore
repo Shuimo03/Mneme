@@ -1,0 +1,13 @@
+.DS_Store
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+mneme/.uv-cache/
+mneme/.idea/
+mneme/.python-version
+mneme/config.yaml
+mneme/data/
+mneme/src/frontend/dist/
+mneme/src/frontend/node_modules/
+mneme/memory/
+**/__pycache__/

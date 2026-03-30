@@ -2,6 +2,7 @@
 
 import logging
 import re
+from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
 from typing import Protocol
@@ -9,6 +10,7 @@ from typing import Protocol
 from ..models.article import Article
 
 logger = logging.getLogger(__name__)
+TitleExtractor = Callable[[str, str], str]
 
 
 class UrlParser(Protocol):
@@ -52,7 +54,12 @@ class FileStorage:
         self.base_dir = Path(base_dir)
         self.url_parser = url_parser or MetaUrlParser()
 
-    def save(self, article: Article, source: str, extract_title_func=None) -> Path | None:
+    def save(
+        self,
+        article: Article,
+        source: str,
+        extract_title_func: TitleExtractor | None = None,
+    ) -> Path | None:
         """Save an article to file.
 
         Args:
@@ -90,7 +97,12 @@ class FileStorage:
 
         return save_path
 
-    def save_batch(self, articles: list[Article], source: str, extract_title_func=None) -> list[Path]:
+    def save_batch(
+        self,
+        articles: list[Article],
+        source: str,
+        extract_title_func: TitleExtractor | None = None,
+    ) -> list[Path]:
         """Save multiple articles to files.
 
         Args:

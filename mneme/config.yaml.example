@@ -1,0 +1,24 @@
+app:
+  name: Mneme
+  database_path: data/mneme.db
+  max_articles_per_source: 3
+
+anthropic:
+  base_url: null
+  model: claude-sonnet-4-20250514
+  api_key: null
+
+scheduler:
+  enabled: false
+  hour: 9
+  minute: 0
+  timezone: Asia/Shanghai
+
+notifications:
+  telegram:
+    bot_token: null
+    chat_id: null
+  feishu:
+    app_id: null
+    app_secret: null
+    user_id: null

@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    @apply font-sans text-text m-0 bg-bg min-h-screen;
+    background:
+      radial-gradient(circle at top right, rgba(13, 124, 108, 0.14), transparent 24%),
+      radial-gradient(circle at 15% 20%, rgba(241, 201, 127, 0.26), transparent 20%),
+      linear-gradient(180deg, #fbf5ea 0%, #f4ecdf 100%);
+  }
+}
+
+@layer components {
+  .panel {
+    @apply flex-1 p-6 border rounded-3xl shadow-lg;
+    backdrop-filter: blur(12px);
+    background: rgba(255, 249, 240, 0.92);
+    border-color: rgba(96, 82, 62, 0.18);
+  }
+
+  .status-card {
+    @apply min-h-32 p-4 rounded-2xl border;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.92) 100%);
+    border-color: rgba(96, 82, 62, 0.12);
+  }
+
+  .status-card strong {
+    @apply block my-2 text-lg;
+  }
+
+  .status-card p {
+    @apply m-0 text-muted leading-relaxed;
+  }
+
+  .article-card {
+    @apply p-5 rounded-2xl border shadow-md;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, #fff9f1 100%);
+    border-color: rgba(96, 82, 62, 0.12);
+  }
+
+  .badge {
+    @apply text-muted uppercase tracking-wider text-xs font-bold;
+  }
+
+  .tag {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(13, 124, 108, 0.2);
+    color: #0b5f54;
+  }
+
+  .bullet-list {
+    @apply my-4 pl-5 text-muted;
+  }
+
+  .bullet-list li + li {
+    @apply mt-2;
+  }
+
+  .primary-button {
+    @apply border-none rounded-full px-5 py-3 cursor-pointer transition-all duration-150 text-white shadow-lg;
+    font: inherit;
+    background: linear-gradient(135deg, #0d7c6c 0%, #0b5f54 100%);
+  }
+
+  .primary-button:hover:not(:disabled) {
+    @apply transform -translate-y-0.5 shadow-xl;
+  }
+
+  .primary-button:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  .secondary-button {
+    @apply border-none rounded-full px-5 py-3 cursor-pointer transition-all duration-150 font-semibold;
+    font: inherit;
+    background: #d7f1ea;
+    color: #0d7c6c;
+  }
+
+  .secondary-button:hover {
+    @apply transform -translate-y-0.5;
+  }
+
+  .danger-button {
+    @apply border-none rounded-full px-5 py-3 cursor-pointer transition-all duration-150 font-semibold;
+    font: inherit;
+    background: #f6d6d2;
+    color: #9a2f23;
+  }
+
+  .danger-button:hover:not(:disabled) {
+    @apply transform -translate-y-0.5;
+  }
+
+  .danger-button:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}
+
+.ambient {
+  @apply fixed z-0 w-80 h-80 rounded-full blur-3xl opacity-50 pointer-events-none;
+}
+
+.ambient-left {
+  @apply top-20 -left-24;
+  background: rgba(241, 201, 127, 0.38);
+}
+
+.ambient-right {
+  @apply bottom-32 -right-20;
+  background: rgba(13, 124, 108, 0.18);
+}
+
+@media (max-width: 720px) {
+  .hero-actions {
+    @apply justify-start;
+  }
+
+  .hero-caption {
+    @apply text-left;
+  }
+}

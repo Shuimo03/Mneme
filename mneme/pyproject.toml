@@ -5,15 +5,47 @@ description = "Information summarization subscription bot"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "anthropic",
+    "apscheduler>=3.11.0",
     "httpx",
     "feedparser",
     "fastapi[standard]>=0.128.0",
+    "pyyaml>=6.0.2",
     "requests>=2.32.5",
     "crawl4ai>=0.8.0",
+    "jinja2>=3.1.6",
 ]
 
 [project.optional-dependencies]
 dev = [
+    "mypy>=1.18.2",
     "pytest",
     "pytest-asyncio",
+    "ruff>=0.13.0",
+    "types-PyYAML>=6.0.12.20250915",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["src/test"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.13"
+files = ["main.py", "src"]
+exclude = ["src/__pycache__", "src/.*/__pycache__"]
+ignore_missing_imports = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+warn_unused_ignores = true
+pretty = true

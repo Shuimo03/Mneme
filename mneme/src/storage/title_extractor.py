@@ -18,7 +18,7 @@ def extract_title(markdown: str, default: str) -> str:
 
     # 跳过图片链接、空白行等非标题行
     lines = markdown.strip().split("\n")
-    for i, line in enumerate(lines):
+    for line in lines:
         line = line.strip()
         # 只处理 # 开头的标题行
         if line.startswith("# "):
